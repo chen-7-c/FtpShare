@@ -36,8 +36,9 @@ jobs:
       working-directory: .
       run: |
         #tar -zcvf ftpshare.tar.gz -C ./dist * 
-        ls
+        cd ./dist
         pwd
+        tar -zcvf ftpshare.tar.gz -C 
 
     - name: Upload assets
       id: upload-release-asset
@@ -45,7 +46,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        upload_url: ${{ needs.release.outputs.upload_url }}
+        upload_url: ${{ github.event.release.tag_name }}
         asset_path: ftpshare.tar.gz
         asset_name: ftpshare.tar.gz
         asset_content_type: application/gzip
