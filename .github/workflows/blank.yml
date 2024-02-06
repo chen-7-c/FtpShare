@@ -38,7 +38,7 @@ jobs:
         #tar -zcvf ftpshare.tar.gz -C ./dist * 
         cd ./dist
         pwd
-        tar -zcvf ftpshare.tar.gz -C 
+        tar -zcvf ftpshare.tar.gz -C .
 
     - name: Upload assets
       id: upload-release-asset
