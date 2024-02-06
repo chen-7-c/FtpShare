@@ -35,7 +35,9 @@ jobs:
     - name: Package
       working-directory: .
       run: |
-        tar -zcvf ftpshare.tar.gz -C ./dist * 
+        #tar -zcvf ftpshare.tar.gz -C ./dist * 
+        ls
+        pwd
 
     - name: Upload assets
       id: upload-release-asset
