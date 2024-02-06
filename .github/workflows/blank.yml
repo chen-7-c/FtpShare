@@ -20,4 +20,27 @@ jobs:
       with:
         python-version: '3.9'
         cache: 'pip' # caching pip dependencies  
-    - run: pip install -r requirements.txt
+    - name: Install dependencies
+    - run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install pyinstaller  
+    - name: Build
+    - run: |
+        pyinstaller -F main.py -n FtpShare 
+
+    - name: Package
+      working-directory: .
+      run: |
+        tar -zcvf ftpshare.tar.gz -C conba/dist * 
+
+    - name: Upload assets
+      id: upload-release-asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ needs.release.outputs.upload_url }}
+        asset_path: ftpshare.tar.gz
+        asset_name: ftpshare.tar.gz
+        asset_content_type: application/gzip
