@@ -21,12 +21,12 @@ jobs:
         python-version: '3.9'
         cache: 'pip' # caching pip dependencies  
     - name: Install dependencies
-    - run: |
+      run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         pip install pyinstaller  
     - name: Build
-    - run: |
+      run: |
         pyinstaller -F main.py -n FtpShare 
 
     - name: Package
