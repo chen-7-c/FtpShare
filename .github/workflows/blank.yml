@@ -37,17 +37,15 @@ jobs:
       run: |
         #tar -zcvf ftpshare.tar.gz -C ./dist * 
         chmod +x dist/*
-        tar -zcvf ${{ steps.application.outputs.name }}.tar.gz -C dist .
+        tar -zcvf ftpshare.tar -C dist .
 
-    - name: Upload release binary
+    - name: Upload assets
       id: upload-release-asset
-      uses: actions/upload-release-asset@v1.0.2
+      uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        upload_url: ${{ steps.get_release.outputs.upload_url }}
-        upload_url1: ${{ steps.latest_release_info.outputs.upload_url }}
       with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ${{ steps.application.outputs.name }}.tar.gz
-        asset_name: ${{ steps.application.outputs.name }}.tar.gz
+        upload_url: ${{ needs.release.outputs.upload_url }}
+        asset_path: ftpshare.tar
+        asset_name: ftpshare.tar
         asset_content_type: application/gzip
