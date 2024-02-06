@@ -56,7 +56,7 @@ jobs:
     
     - name: set tag name
       id: tag
-      run: echo "##[set-output name=name;]$(echo v777)
+      run: echo "##[set-output name=name;]$("v777")
 
     - name: set application name
       id: application
