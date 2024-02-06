@@ -32,7 +32,7 @@ jobs:
     - name: Package
       working-directory: .
       run: |
-        tar -zcvf ftpshare.tar.gz -C conba/dist * 
+        tar -zcvf ftpshare.tar.gz -C ./dist * 
 
     - name: Upload assets
       id: upload-release-asset
