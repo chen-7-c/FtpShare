@@ -52,7 +52,7 @@ jobs:
 
     - name: get version
       id: version
-      run: echo "##[set-output name=version;]$(python my_script.py --version | cut -d ' ' -f3 | awk '$1=$1')"
+      run: echo "##[set-output name=version;]$(python main.py --version | cut -d ' ' -f3 | awk '$1=$1')"
     
     - name: set tag name
       id: tag
