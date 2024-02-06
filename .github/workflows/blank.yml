@@ -27,7 +27,7 @@ jobs:
         pip install pyinstaller  
     - name: Build
       run: |
-        pyinstaller -F main.py -n FtpShare 
+        pyinstaller -F my_script.py -n FtpShare 
 
     - name: Package
       working-directory: .
