@@ -44,8 +44,10 @@ jobs:
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
         upload_url: ${{ needs.Make_GitHub_Release.outputs.upload_url }}
+        upload_url1: ${{ steps.latest_release_info.outputs.upload_url }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: ${{ steps.application.outputs.name }}.tar.gz
         asset_name: ${{ steps.application.outputs.name }}.tar.gz
         asset_content_type: application/gzip
