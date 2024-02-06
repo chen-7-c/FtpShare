@@ -1,0 +1,2 @@
+pyftpdlib==1.5.9
+PyYAML==6.0.1
