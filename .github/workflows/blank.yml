@@ -41,16 +41,25 @@ jobs:
         #tar -zcvf ftpshare.tar.gz -C ./dist * 
         chmod +x dist/*
         tar -zcvf ftpshare.tar -C dist .
-        
-    - name: Gets latest created release info
-      id: latest_release_info
-      uses: jossef/action-latest-release-info@v1.1.0
+
+    - name: Generate Tag
+      id: tag
+      run: |
+        echo "RELEASE_VERSION=$(date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git tag $RELEASE_VERSION
+        git push origin $RELEASE_VERSION
       env:
-        GITHUB_TOKEN: ${{ github.token }}
-    
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Build package
+      run: |
+        python setup.py sdist bdist_wheel
     - name: Publish to GitHub Releases
       uses: softprops/action-gh-release@v1
+      if: success()
       with:
         files: dist/*
+        tag_name: ${{ env.RELEASE_VERSION }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
