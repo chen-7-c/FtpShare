@@ -63,5 +63,5 @@ jobs:
       with:
         upload_url: ${{ steps.latest_release_info.outputs.upload_url }}
         asset_path: ftpshare.tar.gz
-        asset_name: ftpshare-${{steps.tag}}.tar.gz
+        asset_name: ftpshare-${{ steps.tag.RELEASE_VERSION }}.tar.gz
         asset_content_type: application/gzip
