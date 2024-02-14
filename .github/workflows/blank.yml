@@ -13,7 +13,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ ubuntu-latest, windows-latest, macos-latest ]
+        os: [ ubuntu-latest ]
     defaults:
       run:
         working-directory: .
@@ -38,6 +38,7 @@ jobs:
     - name: Package
       working-directory: .
       run: |
+        uname -m
         #tar -zcvf ftpshare.tar.gz -C ./dist * 
         chmod +x dist/*
         tar -zcvf ftpshare.tar.gz -C dist .
