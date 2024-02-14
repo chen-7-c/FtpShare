@@ -46,20 +46,20 @@ jobs:
       id: tag
       run: |
         echo "RELEASE_VERSION=$(date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-        git tag $RELEASE_VERSION
-        git push origin $RELEASE_VERSION
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    - name: Build package
-      run: |
-        python setup.py sdist bdist_wheel
-    - name: Publish to GitHub Releases
-      uses: softprops/action-gh-release@v1
-      if: success()
+    - name: Gets latest created release info
+      id: latest_release_info
+      uses: jossef/action-latest-release-info@v1.1.0
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+    - name: Upload assets
+      id: upload-release-asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        files: dist/*
-        tag_name: ${{ env.RELEASE_VERSION }}
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        upload_url: ${{ steps.latest_release_info.outputs.upload_url }}
+        asset_path: ftp.tar.gz
+        asset_name: ftptar.gz
+        asset_content_type: application/gzip
