@@ -41,46 +41,13 @@ jobs:
         #tar -zcvf ftpshare.tar.gz -C ./dist * 
         chmod +x dist/*
         tar -zcvf ftpshare.tar -C dist .
-
-
-    - name: Declare some variables
-      id: vars
-      shell: bash
-      run: |
-        echo "::set-output name=sha_short::$(git rev-parse --short "$GITHUB_SHA")"
-        echo "##[set-output name=arch;]$(arch)"
-
-    - name: get version
-      id: version
-      run: echo "##[set-output name=version;]$(echo 777)"
-    
-    - name: set tag name
-      id: tag
-      run: echo "##[set-output name=name;]$("v777")
-
-    - name: set application name
-      id: application
-      run: echo "##[set-output name=name;]$(echo ftp-${{ runner.os }}-$(arch)-${{ steps.tag.outputs.name }})"
-
-
+        
     - name: Gets latest created release info
       id: latest_release_info
       uses: jossef/action-latest-release-info@v1.1.0
       env:
         GITHUB_TOKEN: ${{ github.token }}
     
-    - name: Create Release
-      id: create_release
-      uses: actions/create-release@v1
-      if: ${{ steps.checkTag.outputs.exists == 'false' }}
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: ${{ steps.tag.outputs.name }}
-        release_name: ftp-${{ steps.tag.outputs.name }}
-        draft: false
-        prerelease: false
-
     - name: Publish to GitHub Releases
       uses: softprops/action-gh-release@v1
       with:
