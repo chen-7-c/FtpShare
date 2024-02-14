@@ -41,6 +41,7 @@ jobs:
         #tar -zcvf ftpshare.tar.gz -C ./dist * 
         chmod +x dist/*
         tar -zcvf ftpshare.tar.gz -C dist .
+        ls
 
     - name: Generate Tag
       id: tag
